@@ -1,0 +1,52 @@
+<section class="example-section">
+  <label class="example-margin">Logs:</label>
+  <mat-radio-group name="opList"  fxLayout="column" [(ngModel)]="chosenItem">
+    <mat-radio-button *ngFor="let op of logsGroup"
+                      (change)="radioChange($event)"
+                      [value]="op.name" name="opList" >{{op.name}}</mat-radio-button>
+  </mat-radio-group>
+</section>
+
+
+
+<div>
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <!-- Timestamp Column -->
+    <ng-container matColumnDef="timestamp">
+      <th mat-header-cell *matHeaderCellDef> Timestamp</th>
+      <td mat-cell *matCellDef="let element"> {{element.timestamp}} </td>
+    </ng-container>
+
+    <!-- LogType Column -->
+    <ng-container matColumnDef="logType">
+      <th mat-header-cell *matHeaderCellDef> LogType</th>
+      <td mat-cell *matCellDef="let element"> {{element.logType}} </td>
+    </ng-container>
+
+    <!-- ThreadName Column -->
+    <ng-container matColumnDef="threadName">
+      <th mat-header-cell *matHeaderCellDef> ThreadName</th>
+      <td mat-cell *matCellDef="let element"> {{element.threadName}} </td>
+    </ng-container>
+
+    <!-- Message Column -->
+    <ng-container matColumnDef="message">
+      <th mat-header-cell *matHeaderCellDef> Message</th>
+      <td mat-cell *matCellDef="let element"> {{element.message}} </td>
+    </ng-container>
+
+    <!-- Count Column -->
+    <ng-container matColumnDef="count">
+      <th mat-header-cell *matHeaderCellDef> Count</th>
+      <td mat-cell *matCellDef="let element"> {{element.count}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  </table>
+
+</div>
+
