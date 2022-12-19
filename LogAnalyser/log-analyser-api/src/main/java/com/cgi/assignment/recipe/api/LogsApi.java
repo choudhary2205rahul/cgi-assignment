@@ -23,8 +23,8 @@ public class LogsApi {
     }
 
     @GetMapping("/{log-type}")
-    public ResponseEntity<List<Log>> getLogs(@PathVariable("log-type") String input) {
+    public ResponseEntity<LogsResponse> getLogs(@PathVariable("log-type") String input) {
         List<Log> logs = logService.getLogs(input);
-        return new ResponseEntity(LogsResponse.builder().logs(logs).count(logs.size()).build(), HttpStatus.OK);
+        return new ResponseEntity<>(LogsResponse.builder().logs(logs).count(logs.size()).build(), HttpStatus.OK);
     }
 }

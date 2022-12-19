@@ -32,7 +32,7 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public List<Recipe> findAll() {
-        if(recipes.size() < 1) {
+        if(recipes.isEmpty()) {
             throw new RecipeNotFoundException("Recipes not found");
         }
         Collections.sort(recipes, Comparator.comparing(Recipe::getTitle));
@@ -42,17 +42,13 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public List<Recipe> findRecipesWithIngredients(List<String> ingredients) {
         List<Recipe> recipesWithIngredients = new ArrayList<>();
-         recipes.forEach(recipe -> {
-            recipe.getIngredients().forEach(ingredient -> {
-                ingredients.forEach(ing -> {
-                    if(ingredient.getName().startsWith(ing)) {
-                        recipesWithIngredients.add(recipe);
-                    }
-                });
-            });
-         });
+         recipes.forEach(recipe -> recipe.getIngredients().forEach(ingredient -> ingredients.forEach(ing -> {
+             if(ingredient.getName().startsWith(ing)) {
+                 recipesWithIngredients.add(recipe);
+             }
+         })));
 
-         if(recipesWithIngredients.size() < 1) {
+         if(recipesWithIngredients.isEmpty()) {
              throw new RecipeNotFoundException("Recipes not found with given ingredients " + ingredients );
          }
         Collections.sort(recipesWithIngredients, Comparator.comparing(Recipe::getTitle));

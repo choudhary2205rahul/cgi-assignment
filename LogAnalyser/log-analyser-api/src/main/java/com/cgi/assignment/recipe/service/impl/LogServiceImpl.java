@@ -45,14 +45,15 @@ public class LogServiceImpl implements LogService {
             while ((lines = bufferedReader.readLine()) != null) {
                 Matcher matcher = PatternFullLog.matcher(lines);
                 while (matcher.find()) {
-                    if (matcher.group("level").contains(LogType.INFO.name())) {
-                        extracted(matcher, LogType.INFO, map);
-                    } else if (matcher.group("level").contains(LogType.DEBUG.name())) {
-                        extracted(matcher, LogType.DEBUG, map);
-                    } else if (matcher.group("level").contains(LogType.WARN.name())) {
-                        extracted(matcher, LogType.WARN, map);
-                    } else if (matcher.group("level").contains(LogType.ERROR.name())) {
-                        extracted(matcher, LogType.ERROR, map);
+                    String level = matcher.group("level");
+                    if (level.contains(LogType.INFO.name())) {
+                        extracted(matcher, LogType.INFO);
+                    } else if (level.contains(LogType.DEBUG.name())) {
+                        extracted(matcher, LogType.DEBUG);
+                    } else if (level.contains(LogType.WARN.name())) {
+                        extracted(matcher, LogType.WARN);
+                    } else if (level.contains(LogType.ERROR.name())) {
+                        extracted(matcher, LogType.ERROR);
                     }
                 }
             }
@@ -85,8 +86,8 @@ public class LogServiceImpl implements LogService {
      */
     private List<Log> getLogs(Map<String, Log> mapInput) {
         List<Log> sortedList = new ArrayList<>();
-        for (Map.Entry<String, Log> map : mapInput.entrySet()) {
-            sortedList.add(map.getValue());
+        for (Map.Entry<String, Log> logsMap : mapInput.entrySet()) {
+            sortedList.add(logsMap.getValue());
         }
         Collections.sort(sortedList, (o1, o2) -> o2.getCount() - (o1.getCount()));
         return sortedList;
@@ -98,7 +99,7 @@ public class LogServiceImpl implements LogService {
      * @param logType
      * @param map
      */
-    private void extracted(Matcher matcher, LogType logType, Map<String, Integer> map) {
+    private void extracted(Matcher matcher, LogType logType) {
         String text = matcher.group("text");
         try {
             Log log = Log.builder()

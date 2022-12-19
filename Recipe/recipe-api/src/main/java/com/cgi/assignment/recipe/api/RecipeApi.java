@@ -2,7 +2,6 @@ package com.cgi.assignment.recipe.api;
 
 import com.cgi.assignment.recipe.business.RecipeService;
 import com.cgi.assignment.recipe.dto.Recipe;
-import com.cgi.assignment.recipe.dto.Recipes;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
